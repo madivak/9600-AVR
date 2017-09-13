@@ -11,7 +11,10 @@
 
 void USART_Init( unsigned int ubrr);
 void USART_Transmit( unsigned char data );
-unsigned char USART_Receive( void );
-void USART_putstring(char* StringPtr);
+/*unsigned char USART_Receive( void );*/
+
+void USART_Init1( unsigned int ubrr);
+/*void USART_Transmit1( unsigned char data );*/
+unsigned char USART_Receive1( void );
 
 #endif /* INCFILE1_H_ */

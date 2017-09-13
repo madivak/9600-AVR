@@ -16,7 +16,7 @@ void USART_Init( unsigned int ubrr)
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	/* Set frame format: 8data, 2stop bit */
 	UCSR0C = (1<<USBS0)|(3<<UCSZ00);
-	//Double speed mode
+	//Normal speed mode
 	UCSR0A = (1<<U2X0);
 }
 
@@ -28,19 +28,41 @@ void USART_Transmit( unsigned char data )
 	UDR0 = data;
 }
 
-unsigned char USART_Receive( void )
+// unsigned char USART_Receive( void )
+// {
+// 	/* Wait for data to be received */
+// 	while ( !(UCSR0A & (1<<RXC0)) );
+// 	/* Get and return received data from buffer */
+// 	return UDR0;
+// }
+
+//////////////////////////////////////////////////////
+
+void USART_Init1( unsigned int ubrr)
 {
-	/* Wait for data to be received */
-	while ( !(UCSR0A & (1<<RXC0)) );
-	/* Get and return received data from buffer */
-	return UDR0;
+	/*Set baud rate */
+	UBRR1H = (unsigned char)(ubrr>>8);
+	UBRR1L = (unsigned char)ubrr;
+	//Enable receiver and transmitter
+	UCSR1B = (1<<RXEN1)|(1<<TXEN1);
+	/* Set frame format: 8data, 2stop bit */
+	UCSR1C = (1<<USBS1)|(3<<UCSZ10);
+	//Normal speed mode
+	UCSR1A = (1<<U2X1);
 }
 
-void USART_putstring(char* StringPtr)
+// void USART_Transmit1( unsigned char data1 )
+// {
+// 	/* Wait for empty transmit buffer */
+// 	while ( !( UCSR1A & (1<<UDRE1)) );
+// 	/* Put data into buffer, sends the data */
+// 	UDR1 = data1;
+// }
+
+unsigned char USART_Receive1( void )
 {
-	while(*StringPtr != 0x00)
-	{
-		USART_Transmit(*StringPtr);
-	StringPtr++;
-	}
+	/* Wait for data to be received */
+	while ( !(UCSR1A & (1<<RXC1)) );
+	/* Get and return received data from buffer */
+	return UDR1;
 }
