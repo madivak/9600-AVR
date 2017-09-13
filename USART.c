@@ -16,7 +16,7 @@ void USART_Init( unsigned int ubrr)
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	/* Set frame format: 8data, 2stop bit */
 	UCSR0C = (1<<USBS0)|(3<<UCSZ00);
-	//Normal speed mode
+	//Double speed mode
 	UCSR0A = (1<<U2X0);
 }
 
@@ -36,7 +36,8 @@ unsigned char USART_Receive( void )
 	return UDR0;
 }
 
-void USART_putstring(char* StringPtr){
+void USART_putstring(char* StringPtr)
+{
 	while(*StringPtr != 0x00)
 	{
 		USART_Transmit(*StringPtr);
